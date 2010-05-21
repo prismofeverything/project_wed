@@ -33,7 +33,7 @@ package particle {
 			_particle.alpha = 0;
 			this.buttonMode = true;
 			
-			this.alpha = .2;
+			this.alpha = .4;
 			this.x = _startX;
 			this.y = _startY;
 			addChild(_particle);
@@ -55,9 +55,14 @@ package particle {
 			removeEventListener(Event.ENTER_FRAME, followMouse);
 			removeEventListener(Event.ENTER_FRAME, watchMouse);
 			hideParticle();
-			var newX = (_startX - 4) + (_startX + Math.random()*8);
-			var newY = (_startY - 4) + (_startY + Math.random()*8);
-			Tweener.addTween(this, {x:newX, y:newY, time:1, transition:"easeNone", delay:Math.random()*5, onComplete:breath});
+			
+			if (this.x != _startX){
+				
+			var newX = _startX;
+			var newY = _startY;
+			Tweener.addTween(this, {x:newX, y:newY, time:Math.random()*1, transition:"easeOutExpo", delay:Math.random()*.3,onComplete:breath});
+			
+			}
 		}
 		
 	
@@ -73,9 +78,9 @@ package particle {
 			
 			var mouseDist:int = getDist(_particle.mouseX, _particle.mouseY, _particle.x, _particle.y);
 			
-		    if (mouseDist > 200) {
+		    if (mouseDist > 150) {
 				stopBreathing();
-		       	_particle.alpha = .2;
+		       	_particle.alpha = .4;
 				hideParticle();
 				removeEventListener(Event.ENTER_FRAME, followMouse);
 		    }else {
@@ -103,12 +108,12 @@ package particle {
 		private function followMouse(event:Event):void {
 	
 			var location = new Point();
-	     	location.x = stage.mouseX;
-	     	location.y = stage.mouseY;
+	     	location.x = this.mouseX;
+	     	location.y = this.mouseY;
 	
 	     	this.localToGlobal(location);
 	
-			Tweener.addTween(this, {x:location.x, y:location.y, time:Math.random()*5, delay:Math.random()*5, transition:"easeInOutExpo"});
+			Tweener.addTween(this, {x:location.x, y:location.y, time:.5, delay:Math.random()*1, transition:"easeInOutExpo"});
 		}
 		
 		
@@ -125,7 +130,8 @@ package particle {
 			this.alpha = 1;
 		}
 		public function hideParticle(_time:Number = .5):void {
-			Tweener.addTween(this,{alpha:.2, time:.2});
+			//Tweener.addTween(this,{alpha:.2, time:.2});
+			this.alpha = .4;
 		}
 		
 		public function moveParticle(_x:Number, _y:Number, _time:Number = 0, _dly:Number = 0):void {

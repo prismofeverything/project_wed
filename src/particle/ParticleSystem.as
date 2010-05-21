@@ -38,21 +38,21 @@ package particle {
 				item.alpha = 0;
 				
 				var newX:Number = _curX + _increment;
-				var newTime:Number = Math.random()*3 + 1;
+				//var newTime:Number = Math.random()*3 + 1;
 				var newDelay:Number = i*.005;
 				
 				if (newX + _increment + _padding > stage.stageWidth){
 					_curX = 0;
 					_curY += 20;
-					item.showParticle(newTime, newDelay);
-					item.moveParticle(0, _curY, newTime, newDelay);
+					item.showParticle(0, newDelay);
+					item.moveParticle(0, _curY, 0, newDelay);
 					item._startX = 0;
 					item._startY = _curY;
 				} else {
 					trace(_curX)
 					_curX += _increment + _padding;
-					item.showParticle(newTime, newDelay);
-					item.moveParticle(_curX, _curY, newTime, newDelay);
+					item.showParticle(0, newDelay);
+					item.moveParticle(_curX, _curY, 0, newDelay);
 					_curX++;
 					item._startX = _curX;
 					item._startY = _curY;
