@@ -11,11 +11,11 @@ package app {
 	import flash.net.URLRequest;
 	import flash.display.Loader;
 	
+	import particle.*;
 
 	public class Main extends MovieClip {
 		
-		private var _fluid:MovieClip;
-		
+		private var _particleSystem:ParticleSystem;
 		
 		public function Main(){
 			super();
@@ -24,22 +24,9 @@ package app {
 		}
 		
 		private function createChildren(event:Event):void {
-			
-			_fluid = new MovieClip();
-			addChild(_fluid);
-			
-			var fluidLoader:Loader = new Loader();
-			var fluidRequest:URLRequest = new URLRequest("FluidSolverHD.swf");
-			
-			fluidLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onCompleteHandler);
-			fluidLoader.load(fluidRequest);
-
+			_particleSystem = new ParticleSystem(90);
+			addChild(_particleSystem);
 		}
-		
-		private function onCompleteHandler(event:Event){
-			_fluid.addChild(event.target.content)
-		}
-		
 
 	}
 
