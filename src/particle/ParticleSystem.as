@@ -9,13 +9,14 @@ package particle {
 	public class ParticleSystem extends MovieClip {
 	
 		
-		private var _particles:Array = [];
+		public var _particles:Array = [];
+		
 		private var _num_particles:Number;
 		
 		private var _increment:Number;
-		private var _curX:Number = -50;
-		private var _curY:Number = 0;
-		private var _padding = 50;
+		private var _curX:Number = 0;
+		private var _curY:Number = -100;
+		private var _padding = 20;
 		
 		public function ParticleSystem(num:Number){
 			super();
@@ -32,10 +33,9 @@ package particle {
 			for (var i:Number = 0; i < _num_particles; i++){
 				
 				var item:Particle = new Particle();
-				item.alpha = 0;
 				_particles.push(item);
-				
-				trace(stage.stageWidth)
+								
+				item.alpha = 0;
 				
 				var newX:Number = _curX + _increment;
 				var newTime:Number = Math.random()*3 + 1;
@@ -43,36 +43,27 @@ package particle {
 				
 				if (newX + _increment + _padding > stage.stageWidth){
 					_curX = 0;
-					_curY += 100;
+					_curY += 20;
 					item.showParticle(newTime, newDelay);
 					item.moveParticle(0, _curY, newTime, newDelay);
+					item._startX = 0;
+					item._startY = _curY;
 				} else {
 					trace(_curX)
 					_curX += _increment + _padding;
 					item.showParticle(newTime, newDelay);
 					item.moveParticle(_curX, _curY, newTime, newDelay);
 					_curX++;
+					item._startX = _curX;
+					item._startY = _curY;
 				}
 
-				
 				addChild(item);
+				
 			}
 			
 		}
 		
-		
-		
-		
-		public function showParticle():void {
-			this.alpha = 1;
-		}
-		public function hideParticle():void {
-			this.alpha = 0;
-		}
-		
-		public function moveParticle(_x:Number, _y:Number, _time:Number):void {
-			Tweener.addTween(this, {x:_x, y:_y, time:_time, transition:"easeInOutExpo"});
-		}
 		
 	}
 

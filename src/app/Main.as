@@ -24,7 +24,7 @@ package app {
 		}
 		
 		private function createChildren(event:Event):void {
-			_particleSystem = new ParticleSystem(90);
+			_particleSystem = new ParticleSystem(1190);
 			addChild(_particleSystem);
 		}
 
