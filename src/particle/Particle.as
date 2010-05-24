@@ -58,16 +58,17 @@ package particle {
 		
 		private function releaseIt(event:MouseEvent):void {
 			
+			vortex = 50;
+			
+			this.stopDrag();      	
 			removeEventListener(Event.ENTER_FRAME, followMouse);
 			removeEventListener(Event.ENTER_FRAME, watchMouse);
 			
 			hideParticle();
 			
-			if (this.x != _startX){
 			
-				Tweener.addTween(this, {x:_startX, y:_startY, time:Math.random()*1, transition:"easeOutExpo", delay:Math.random()*.3,onComplete:breath});
+			startBreathing();
 			
-			}
 		}
 		
 	
@@ -126,8 +127,8 @@ package particle {
 		
 		private function breath(event:Event = null):void {
 			if (breathing == true){
-				var newX = (_startX - 1) + (_startX + Math.random()*2);
-				var newY = (_startY - 1) + (_startY + Math.random()*2);
+				var newX = (this.x - 1) + (this.x + Math.random()*2);
+				var newY = (this.y - 1) + (this.y + Math.random()*2);
 				this.x = newX;
 				this.y = newY;
 				/*Tweener.addTween(this, {x:newX, y:newY, time:Math.random()*1, transition:"easeNone", onComplete:breath});*/
