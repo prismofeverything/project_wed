@@ -13,6 +13,7 @@ package particle {
 		private var _particle:MovieClip;
 		
 		private var _curDly:Number = 0;
+		private var vortex:Number = 50;
 		
 		public var _startX:Number;
 		public var _startY:Number;
@@ -23,6 +24,7 @@ package particle {
 		public function Particle(){
 			super();
 			addEventListener(Event.ADDED_TO_STAGE, createChildren);
+			ColorShortcuts.init();
 			DisplayShortcuts.init();
 		}
 		
@@ -38,6 +40,8 @@ package particle {
 			this.y = _startY;
 			addChild(_particle);
 			
+			startBreathing();
+			
 			createEvents();
 			
 		}
@@ -51,16 +55,17 @@ package particle {
 		private function dragIt(event:MouseEvent):void {
 			addEventListener(Event.ENTER_FRAME, watchMouse);
 		}
+		
 		private function releaseIt(event:MouseEvent):void {
+			
 			removeEventListener(Event.ENTER_FRAME, followMouse);
 			removeEventListener(Event.ENTER_FRAME, watchMouse);
+			
 			hideParticle();
 			
 			if (this.x != _startX){
-				
-			var newX = _startX;
-			var newY = _startY;
-			Tweener.addTween(this, {x:newX, y:newY, time:Math.random()*1, transition:"easeOutExpo", delay:Math.random()*.3,onComplete:breath});
+			
+				Tweener.addTween(this, {x:_startX, y:_startY, time:Math.random()*1, transition:"easeOutExpo", delay:Math.random()*.3,onComplete:breath});
 			
 			}
 		}
@@ -77,16 +82,18 @@ package particle {
 		private function watchMouse(event:Event):void {
 			
 			var mouseDist:int = getDist(_particle.mouseX, _particle.mouseY, _particle.x, _particle.y);
+		
+			vortex++;
 			
-		    if (mouseDist > 150) {
-				stopBreathing();
+		    if (mouseDist > vortex) {
+				//stopBreathing();
 		       	_particle.alpha = .4;
 				hideParticle();
 				removeEventListener(Event.ENTER_FRAME, followMouse);
 		    }else {
 				startBreathing();
 				this.startDrag();      	
-				_particle.alpha = .8;
+				_particle.alpha = 1;
 				showParticle();
 				addEventListener(Event.ENTER_FRAME, followMouse);
 		    }
@@ -108,8 +115,8 @@ package particle {
 		private function followMouse(event:Event):void {
 	
 			var location = new Point();
-	     	location.x = this.mouseX;
-	     	location.y = this.mouseY;
+	     	location.x = stage.mouseX;
+	     	location.y = stage.mouseY;
 	
 	     	this.localToGlobal(location);
 	
@@ -119,9 +126,11 @@ package particle {
 		
 		private function breath(event:Event = null):void {
 			if (breathing == true){
-				var newX = (_startX - 4) + (_startX + Math.random()*8);
-				var newY = (_startY - 4) + (_startY + Math.random()*8);
-				Tweener.addTween(this, {x:newX, y:newY, time:1, transition:"easeNone", onComplete:breath});
+				var newX = (_startX - 1) + (_startX + Math.random()*2);
+				var newY = (_startY - 1) + (_startY + Math.random()*2);
+				this.x = newX;
+				this.y = newY;
+				/*Tweener.addTween(this, {x:newX, y:newY, time:Math.random()*1, transition:"easeNone", onComplete:breath});*/
 			}
 		}
 		

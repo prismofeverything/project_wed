@@ -44,18 +44,18 @@ package particle {
 				if (newX + _increment + _padding > stage.stageWidth){
 					_curX = 0;
 					_curY += 20;
-					item.showParticle(0, newDelay);
-					item.moveParticle(0, _curY, 0, newDelay);
 					item._startX = 0;
 					item._startY = _curY;
+					item.showParticle(0, newDelay);
+					item.moveParticle(0, _curY, 0, newDelay);
 				} else {
 					trace(_curX)
 					_curX += _increment + _padding;
+					item._startX = _curX;
+					item._startY = _curY;
 					item.showParticle(0, newDelay);
 					item.moveParticle(_curX, _curY, 0, newDelay);
 					_curX++;
-					item._startX = _curX;
-					item._startY = _curY;
 				}
 
 				addChild(item);

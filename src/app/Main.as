@@ -25,6 +25,7 @@ package app {
 		
 		private function createChildren(event:Event):void {
 			_particleSystem = new ParticleSystem(1190);
+			//_particleSystem.blendMode = "add";
 			addChild(_particleSystem);
 		}
 
